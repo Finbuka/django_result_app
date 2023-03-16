@@ -1,0 +1,117 @@
+{% extends 'dashboard_base.html' %}{% load static %}
+{% block title %}Result{% endblock title %}
+
+{% block body %}
+<div id="wrapper">
+    {% block first_nav_bar %}
+    {{ block.super }}
+    {% endblock first_nav_bar %}
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+            {% block second_nav_bar %}
+            {{ block.super }}
+            {% endblock second_nav_bar %}
+
+            <div class="container-fluid">
+                <h3 class="text-dark mb-4">Result For {{ year }}00 Level</h3>
+                <div class="card shadow">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 fw-bold text-center">FIRST SEMESTER</p>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                            aria-describedby="dataTable_info">
+                            <table class="table my-0 table-sm" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Title</th>
+                                        <th>Level</th>
+                                        <th>Credit Unit</th>
+                                        <th>Score</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result in results %}
+                                    {% if result.semester == 1 %}
+                                    <tr>
+                                        <td>{{ result.course_code }}</td>
+                                        <td>{{ result.course_title }}</td>
+                                        <td>{{ result.year }}00</td>
+                                        <td>{{ result.credit_unit }}</td>
+                                        <td>{{ result.mark }}</td>
+                                        <td>{{ result.grade }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                                    Sum of score: {{ sum_first_sem }}</p>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card shadow mt-3 mb-3">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 fw-bold text-center">SECOND SEMESTER</p>
+                    </div>
+                    <div class="card-body">
+
+                        <div class="table-responsive table mt-2" id="dataTable" role="grid"
+                            aria-describedby="dataTable_info">
+                            <table class="table my-0 table-sm" id="dataTable">
+                                <thead>
+                                    <tr>
+                                        <th>Course Code</th>
+                                        <th>Course Title</th>
+                                        <th>Level</th>
+                                        <th>Semester</th>
+                                        <th>Score</th>
+                                        <th>Grade</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for result in results %}
+                                    {% if result.semester == 2 %}
+                                    <tr>
+                                        <td>{{ result.course_code }}</td>
+                                        <td>{{ result.course_title }}</td>
+                                        <td>{{ result.year }}00</td>
+                                        <td>{{ result.credit_unit }}</td>
+                                        <td>{{ result.mark }}</td>
+                                        <td>{{ result.grade }}</td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 align-self-center">
+                                <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">
+                                    Sum of score: {{ sum_second_sem }}</p>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% block footer %}
+        {{ block.super }}
+        {% endblock footer %}    
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+{% endblock body %}

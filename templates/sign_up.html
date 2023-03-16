@@ -1,0 +1,45 @@
+{% extends 'base.html' %}{% load static %}
+{% block title %}Sign Up{% endblock title %}
+{% block body %}
+<div class="container">
+  <div class="card shadow-lg o-hidden border-0 my-5">
+    <div class="card-body p-0">
+      <div class="row">
+        <div class="col-lg-5 d-none d-lg-flex">
+          <div class="flex-grow-1 bg-register-image" style="
+                  background-image: url('/static/img/dogs/wartung-und-inhalt.png');
+                "></div>
+        </div>
+        <div class="col-lg-7">
+          <div class="p-5">
+            <div class="text-center">
+              <h4 class="display-7 fw-bold mb-4">Create an<span class="underline"> Account!</span></h4>
+            </div>
+            <form class="user" method="post">
+              {% csrf_token %}
+              {% for field in form %}
+              <div class="mb-3">
+                {{ field }}
+                {{ field.errors }}
+                {% if forloop.counter == 6 %}
+                <div class="ms-5">
+                  {{ field.help_text }}
+                </div>
+                {% endif %}
+              </div>
+              {% endfor %}
+              <button class="btn btn-primary d-block btn-user w-100" type="submit">
+                Register Account
+              </button>
+              <hr />
+            </form>
+            <div class="text-center">
+              Already have an account? <a href="{% url 'sign_in' %}"> Login!</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock body %}

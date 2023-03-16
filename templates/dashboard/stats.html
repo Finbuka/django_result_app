@@ -1,0 +1,83 @@
+{% extends 'dashboard_base.html' %}{% load static %}
+{% load tags_extra %}
+
+{% block title %}
+Stats
+{% endblock title %}
+
+{% block body %}
+<div id="wrapper">
+
+  {% block first_nav_bar %}
+  {{ block.super }}
+  {% endblock first_nav_bar %}
+
+  <div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+
+      {% block second_nav_bar %}
+      {{ block.super }}
+      {% endblock second_nav_bar %}
+
+      <div class="container-fluid">
+        <h3 class="text-dark mb-4">Stats</h3>
+        <div class="row">
+          <div class="col">
+            {% for res in stats %}
+            <div class="card shadow mb-3">
+              <div class="card-header py-3">
+                <p class="text-primary m-0 fw-bold">Year {{ res.year }}</p>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                  <table class="table my-0 table-sm" id="dataTable">
+                    <thead>
+                      <tr>
+                        <th>Semester</th>
+                        <th>Total Grade</th>
+                        <th>Total Credit Unit</th>
+                        <th>GPA/CGPA</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>First Semester </td>
+                        <td>{{ res.sum_mark_1 }}</td>
+                        <td>{{ res.sum_cu_1 }}</td>
+                        <td>{{ res.sum_mark_1|divide:res.sum_cu_1|floatformat:3 }}</td>
+                      </tr>
+                    </tbody>
+                    <tbody>
+                      <tr>
+                        <td>Second Semester </td>
+                        <td>{{ res.sum_mark_2 }}</td>
+                        <td>{{ res.sum_cu_2 }}</td>
+                        <td>{{ res.sum_mark_2|divide:res.sum_cu_2|floatformat:3 }}</td>
+                      </tr>
+                    </tbody>
+                    {% define res.sum_mark_1|add:res.sum_mark_2 as x1 %}
+                    {% define res.sum_cu_1|add:res.sum_cu_2 as x2 %}
+                    <tfoot>
+                      <tr>
+                        <td><strong>Total/CGPA</strong></td>
+                        <td>{{ res.sum_mark_1|add:res.sum_mark_2|floatformat:3 }}</td>
+                        <td>{{ res.sum_cu_1|add:res.sum_cu_2|floatformat:3 }}</td>
+                        <td><strong>CGPA {{ x1|divide:x2|floatformat:3 }}</strong></td>
+                      </tr>
+                    </tfoot>
+
+                  </table>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% block footer %}
+    {{ block.super }}
+    {% endblock footer %}
+  </div>
+</div>
+{% endblock body %}

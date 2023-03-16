@@ -1,0 +1,89 @@
+{% extends 'base.html' %}{% load static %}
+
+{% block title %}
+About
+{% endblock title %}
+{% block body %}
+  <!-- End: Navbar Centered Links --><!-- Start: Hero Grid -->
+  <section class="py-5 mt-5">
+    <!-- Start: Hero Clean Reverse -->
+    <div class="container py-4 py-xl-5">
+      <div class="row gy-4 gy-md-0">
+        <div
+          class="col-md-6 text-center text-md-start d-flex d-sm-flex d-md-flex justify-content-center align-items-center justify-content-md-start align-items-md-center justify-content-xl-center">
+          <div style="max-width: 350px">
+            <h1 class="display-5 fw-bold mb-4">
+              Skyrocket your productivity with our&nbsp;<span class="underline">tools</span>.
+            </h1>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <img class="rounded img-fluid w-100 fit-cover" style="min-height: 300px"
+              src="{% static '/img/illustrations/startup.svg' h=bd2b171f88c19ebbeec0b05e852bfefb %}" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End: Hero Clean Reverse -->
+  </section>
+  <!-- End: Hero Grid -->
+  <section class="py-5">
+    <div class="container py-5">
+      <div class="col-md-8  text-center mx-auto">
+        <h2 class="display-6 fw-bold mb-4">
+          Our <span class="underline">Mission</span>
+        </h2>
+        <p class="text-muted">
+          As a software developer, our mission is to use our skills and knowledge to create 
+          innovative and high-quality software solutions that meet the needs of users and 
+          clients. We work as a collaborative and cross-functional team to design, 
+          develop, test, and deploy software that is efficient, reliable, and user-friendly.
+        </p>
+      </div>
+    </div>
+  </section>
+  <section class="py-5">
+    <!-- Start: Features Cards -->
+    <div class="col-md-8 col-xl-6 text-center mx-auto">
+      <h2 class="display-6 fw-bold mb-4">
+        Who <span class="underline">we</span> Are
+      </h2>
+      <p class="text-muted">
+        We are a team of passionate software developers who are dedicated to creating 
+        innovative and cutting-edge software solutions that solve real-world problems. 
+        Our team consists of experienced developers, designers, project managers, and 
+        quality assurance specialists who work together to deliver high-quality software 
+        products that meet the needs and expectations of our clients.
+      </p>
+      <a class="btn btn-outline-primary btn-lg" role="button" href="{% url 'contact' %}"> <i class="fa fa-envelope"></i> Contact</a>
+    </div>
+    <div class="container py-5">
+      <div class="row">
+          <div class="team-member">
+            <img class="rounded-circle mx-auto" src="/static/img/ebuka_towel.jpeg" />
+            <h4>Finbar Ebuka</h4>
+            <p class="text-muted">Fullstack Developer</p>
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="https://github.com/Finbuka"><i class="fa fa-github"></i></a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#"><i class="fa fa-twitter"></i></a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#"><i class="fa fa-linkedin"></i></a>
+              </li>
+            </ul>
+          </div>
+      </div>
+  </section>
+</section>
+{% endblock body %}
+  {% block meet_us %}
+
+  {% endblock meet_us %}
+
+  <!-- Start: Footer Multi Column -->
+
+  <!-- End: Footer Multi Column -->

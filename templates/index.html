@@ -1,0 +1,61 @@
+{% extends 'base.html' %}{% load static %}
+{% block title %}Home - Economics{% endblock title %}
+{% block body %}
+<header class="pt-5">
+  <div class="container pt-4 pt-xl-5">
+    <div class="row pt-5">
+      <div class="col-md-8 text-center text-md-start mx-auto">
+        <div class="text-center">
+          <h1 class="display-4 fw-bold mb-5">
+            Economics is the 
+            &nbsp;<span class="underline">blood</span> that runs through the 
+            &nbsp;<span class="underline">vains</span> of a country.
+          </h1>
+          <p class="fs-5 text-muted mb-5">
+            Great thinkers are great Readers
+          </p>
+              <div class="d-flex justify-content-center flex-wrap">
+                    <a class="btn btn-primary shadow" role="button" href="{% url 'sign_up' %}">Sign up</a>
+                    <a class="btn btn-primary shadow ms-3" role="button" href="{% url 'sign_in' %}">Sign in</a>
+              </div>
+            </div>
+          </div>
+      <div class="col-12 col-lg-10 mx-auto mt-3">
+        <div class="text-center position-relative">
+          <img class="img-fluid" src="{% static 'img/adam.png' %}"
+          style="width: 800px" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End: Hero Clean Reverse -->
+</header>
+
+
+
+<!-- Start: Banner Heading Image -->
+<section class="py-4 py-xl-5">
+  <!-- Start: 1 Row 2 Columns -->
+  <div class="container">
+    <div class="bg-primary border rounded border-0 border-primary overflow-hidden">
+      <div class="row g-0">
+        <div class="col-md-6 d-flex flex-column justify-content-center">
+          <div class="text-white p-4 p-md-5">
+            <h2 class="fw-bold text-white mb-3">
+              Join the largest tech network.
+            </h2>
+          </div>
+        </div>
+        <div class="col-md-6 order-first order-md-last" style="min-height: 250px">
+          <img class="w-100 h-100 fit-contain pt-5 pt-md-0"
+          src="{% static 'img/dogs/wartung-und-inhalt.png' %}" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- End: 1 Row 2 Columns -->
+</section>
+<!-- End: Banner Heading Image -->
+
+<!-- Start: FAQ -->
+{% endblock body %}

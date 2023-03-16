@@ -1,0 +1,161 @@
+{% extends 'dashboard_base.html' %}{% load static %}
+
+{% block title %}
+Settings
+{% endblock title %}
+
+{% block body %}
+<div id="wrapper">
+
+  {% block first_nav_bar %}
+  {{ block.super }}
+  {% endblock first_nav_bar %}
+
+  <div class="d-flex flex-column" id="content-wrapper">
+    <div id="content">
+
+      {% block second_nav_bar %}
+      {{ block.super }}
+      {% endblock second_nav_bar %}
+
+      <div class="container-fluid">
+        <h3 class="text-dark mb-4">Profile</h3>
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <div class="col-lg-4">
+              <div class="card mb-3">
+                <div class="card-body text-center shadow">
+                  <img class="rounded-circle mb-3 mt-4" src="{{request.user.image.url}}" width="160" height="160" />
+                  <div class="mb-3">
+                    {{form.image}}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-8">
+              <div class="row">
+                <div class="col">
+                  <div class="card shadow mb-3">
+                    <div class="card-header py-3">
+                      <p class="text-primary m-0 fw-bold">User Settings</p>
+                    </div>
+                    <div class="card-body">
+                      <div class="row row-cols-1 row-cols-md-2">
+                        <div class="col">
+                          <div class="mb-3">
+                            <label class="form-label" for="username"><strong>Username</strong></label>{{form.username}}
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="mb-3">
+                            <label class="form-label" for="email"><strong>Email
+                                Address</strong></label>{{form.email}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row row-cols-1 row-cols-md-2">
+                        <div class="col">
+                          <div class="mb-3">
+                            <label class="form-label" for="first_name"><strong>First
+                                Name</strong></label>{{form.first_name}}
+                          </div>
+                        </div>
+                        <div class="col">
+                          <div class="mb-3">
+                            <label class="form-label" for="last_name"><strong>Last
+                                Name</strong></label>{{form.last_name}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <div class="mb-3">
+                            <label class="form-label" for="mat_number"><strong>Mat
+                                Number</strong></label>{{form.mat_number}}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col">
+                          <div class="mb-3">
+                            {% if form.errors %}
+                            {% for error in form.errors %}
+                            <ul>
+                              <li>{{ error }}</li>
+                            </ul>
+                            {% endfor %}
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <button class="btn btn-primary btn-sm" type="submit">
+                          Save Profile
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card shadow mb-5">
+            <div class="card-header py-3">
+              <p class="text-primary m-0 fw-bold">Bio</p>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-md-6">
+                  <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                      <label class="form-label" for="bio"><strong>Bio</strong><br /></label>{{form.bio}}
+                    </div>
+                    <div class="mb-3">
+                      <button class="btn btn-primary btn-sm" type="submit">
+                        Save Bio
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div class="card shadow mb-5">
+          <div class="card-header py-3">
+            <p class="text-primary m-0 fw-bold">Change Password</p>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <form method="post" action="{% url 'password_change' %}">
+                  {% csrf_token %}
+                  {% for psform in passform %}
+                  <div class="mb-3"><label class="form-label"><strong>{{ psform.label }}</strong></label>
+                    {{ psform }}
+                    {% if forloop.counter == 2 %}
+                    {{ psform.help_text }}
+                    {% endif %}
+                  </div>
+                  {% endfor %}
+                  <div>
+                    <button class="btn btn-primary btn-sm" type="submit">
+                      Change Password
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% block footer %}
+    {{ block.super }}
+    {% endblock footer %}
+  </div>
+  <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+</div>
+{% endblock body %}
