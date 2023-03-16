@@ -14,8 +14,8 @@ from pathlib import Path
 from os import getenv
 import dj_database_url
 
-from dotenv import load_dotenv
-load_dotenv()
+# from dotenv import load_dotenv
+# load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -80,16 +80,16 @@ WSGI_APPLICATION = "economics_result.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-
 # DATABASES = {
-#     "default": dj_database_url.parse(getenv("DATABASE_URL"))
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
 # }
+
+DATABASES = {
+    "default": dj_database_url.parse(getenv("DATABASE_URL"))
+}
 
 
 # Password validation
@@ -128,7 +128,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    "static",
+    BASE_DIR/"static",
 ]
 # STATIC_ROOT = BASE_DIR/"static"
 
