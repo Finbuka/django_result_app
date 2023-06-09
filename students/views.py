@@ -1,29 +1,29 @@
-from typing import Any, Dict
+from typing import Any, Dict, Optional, Type
+from django.forms import BaseModelForm
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import redirect
-from .forms import CustomLoginForm, RegistrationForm, UpdateUser,ChangePass
-from django.contrib.auth.views import LoginView
+from django.shortcuts import redirect, render
+from .forms import (CustomLoginForm, ChangePass,
+                    RegistrationForm, UpdateUser,
+                    customPasswordResetForm)
+from django.contrib.auth.views import LoginView, PasswordResetView
 from django.views.generic import FormView, TemplateView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from .models import Students, ResultU2018
-from rest_framework.decorators import APIView
 from rest_framework.response import Response
-from .serializer import ResultSerializer
+from rest_framework.decorators import api_view
 from django.core.mail import send_mail
 from django.conf import settings
+from django.http import JsonResponse
 
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-
-# from django.shortcuts import render
-# from rest_framework.decorators import api_view
-# from django.http import JsonResponse
+# from django.views.decorators.csrf import csrf_exempt
+# from django.utils.decorators import method_decorator
+# from rest_framework.decorators import APIView
+# from .serializer import ResultSerializer
 # from django.contrib.auth import views as auth_views
 
 # Create your views here.
 
-@method_decorator(csrf_exempt, name='dispatch')
 class SignUp(FormView):
     form_class = RegistrationForm
     success_url = reverse_lazy('dashboard')
@@ -40,7 +40,6 @@ class SignUp(FormView):
             return redirect('dashboard')
         return super(SignUp,self).get(request, *args, **kwargs)
 
-@method_decorator(csrf_exempt, name='post')
 class SignIn(LoginView):
     template_name='sign_in.html'
     redirect_authenticated_user = True
@@ -132,20 +131,27 @@ class Stats(DetailView):
     def get_object(self):
         return self.request.user
     
-class ResultApi(APIView):
-    def get(self, request):
-        users = Students.objects.all()
-        res = ResultSerializer(users, many=True)
-        return Response(res.data)
-    
+# class ResultApi(APIView):
+#     def get(self, request):
+#         users = Students.objects.all()
+#         res = ResultSerializer(users, many=True)
+#         return Response(res.data)
 
+class resetPassword(PasswordResetView):
+    template_name="forgot-password.html"
+    success_url = reverse_lazy("password_reset_done")
+    form_class = customPasswordResetForm
+
+
+    
 def mail(request):
-    if request.method == "POST":
-        data = request.POST
-        send_mail(data["subject"],data["message"],
-            settings.EMAIL_HOST_USER,
-            ['ebufinbar10@gmail.com'],fail_silently=False)
-    return redirect("/")
+        if request.method == "POST":
+            data = request.POST
+            # send_mail(data["subject"],data["message"],
+            # settings.EMAIL_HOST_USER,
+            # ['ebufinbar10@gmail.com'],fail_silently=False)
+            return JsonResponse({"subject":data["subject"]})
+        return render(request,"contact.html",)
 
 # def update_record(request):
 #     results = ResultU2018.objects.get(student_mat=None,result_matno="U2018/6005076",course_code="ECO 101.1")

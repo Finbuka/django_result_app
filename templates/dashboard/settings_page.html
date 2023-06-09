@@ -158,4 +158,67 @@ Settings
   </div>
   <a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
 </div>
+
+<!-- <div class="col-md-6 col-xl-4">
+  <div class="card">
+      <div class="card-body">
+          <div class="py-4">
+              <h6 class="mb-20">A success message!</h6>
+              <button type="button" class="btn btn-primary btn-xs" id="sa-success">Click me</button>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div class="col-md-6 col-xl-4">
+  <div class="card">
+      <div class="card-body">
+          <div class="py-4">
+              <h6 class="mb-20">A modal with a title, an error icon, a text, and a footer</h6>
+              <button type="button" class="btn btn-primary btn-xs" id="sa-error">Click me</button>
+          </div>
+      </div>
+  </div>
+</div> -->
+
 {% endblock body %}
+{% block extra_js %}
+{{ block.super }}
+<script>
+
+// const form = document.querySelector('#myForm');
+
+// $(document).on("submit","#myForm", function(e){
+//   e.preventDefault()
+
+//   $.ajax({
+//     type:form.method,
+//     url:form.action,
+//     data: new FormData(form),
+//     success: function(data){console.log("ebuk",data)}
+//   })
+// })
+
+//   const form = document.querySelector('#myForm');
+
+// form.addEventListener('submit', function(event) {
+//   event.preventDefault(); // Prevent the form from submitting normally
+
+//   // Send the form data to the server using Ajax or fetch
+//   fetch(form.action, {
+//     method: form.method,
+//     body: new FormData(form)
+//   }).then(response => {
+//     // Handle the response from the server
+//     console.log(response);
+//   }).catch(error => {
+//     // Handle any errors that occur
+//     console.error(error);
+//   });
+// });
+</script>
+<!-- <script src="/static/static_dashboard/js/sweetalert-init.js"></script>
+<script src="/static/static_dashboard/js/sweetalert2.min.js"></script> -->
+
+{% endblock extra_js %}

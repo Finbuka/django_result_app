@@ -21,7 +21,7 @@ Contact
     <div class="row d-flex justify-content-center">
       <div class="col-md-6">
         <div>
-          <form class="p-3 p-xl-4" method="post" action="{% url 'contact_message' %}">
+          <form class="p-3 p-xl-4" method="post" action="." id="contactForm">
             {% csrf_token %}
             <div class="mb-3">
               <input class="shadow form-control" type="text" id="name-1" name="subject" placeholder="Subject" />
@@ -46,3 +46,31 @@ Contact
 {% block meet_us %}
 
 {% endblock meet_us %}
+{% block extra_js %}
+<script>
+
+  const form = document.querySelector('#contactForm');
+
+  // $(document).on("submit","#contactForm", function(e){
+  //   e.preventDefault()
+
+  //   $.ajax({
+  //     type:form.method,
+  //     url:form.action,
+  //     data: new FormData(form),
+  //     success: function(data){console.log("ebuk",data)}
+  //   })
+  // })
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault(); // Prevent the form from submitting normally
+
+  fetch(form.action, {  
+    method: form.method,
+    body: new FormData(form)
+  }).then(response => {return response.json();}).catch(error => {
+    console.error("error",error);
+  });
+});
+</script>
+{% endblock extra_js %}

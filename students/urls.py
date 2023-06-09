@@ -19,18 +19,16 @@ urlpatterns = [
     path('settings/',login_required(def_views.UpdateProfile.as_view()),name='settings'),
 
     path('about/', TemplateView.as_view(template_name='about.html'),name='about'),
-    path('contact/', TemplateView.as_view(template_name='contact.html'),name='contact'),
-    path('contact_message/', def_views.mail,name='contact_message'),
+    path('contact/',  def_views.mail,name='contact'),
 
-
-    path('api/links/',def_views.ResultApi.as_view(),name='api_links'),
+    # path('api/links/',def_views.ResultApi.as_view(),name='api_links'),
 
     # path('update_mat_number',def_views.update_record,name='update_mat_number'),
 
 
     path('password_change/',auth_views.PasswordChangeView.as_view(),name='password_change'),
     path('password_change/done/',auth_views.PasswordChangeDoneView.as_view(),name='password_change_done'),
-    path('password_reset/',auth_views.PasswordResetView.as_view() ,name='password_reset'),
+    path('password_reset/',def_views.resetPassword.as_view() ,name='password_reset'),
     path('password_reset/done/',auth_views.PasswordResetDoneView.as_view(),name='password_reset_done'),
     path('reset/<uidb64>/<token>/',auth_views.PasswordResetConfirmView.as_view(),name='password_reset_confirm'),
     path('reset/done/',auth_views.PasswordResetCompleteView.as_view(),name='password_reset_complete'),

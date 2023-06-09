@@ -1,7 +1,12 @@
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm, PasswordChangeForm
+from django.contrib.auth.forms import (UserCreationForm, PasswordResetForm,
+                                       AuthenticationForm,
+                                       UserChangeForm,
+                                       PasswordChangeForm)
 from .models import Students
 from django import forms
+# from django.core.exceptions import ValidationError
 from django.contrib.auth import password_validation
+import re
 
 
 class RegistrationForm(UserCreationForm):
@@ -24,6 +29,14 @@ class RegistrationForm(UserCreationForm):
     class Meta:
         model = Students
         fields = ('username','first_name','last_name','mat_number','email','password1','password2')
+
+    def clean_mat_number(self):
+        if self.cleaned_data['mat_number']:
+            if re.match(r"U20\d{2}/6005\d{3}", self.cleaned_data['mat_number']) is None\
+            or re.match(r"U20\d{2}/6005\d{3}", self.cleaned_data['mat_number'])[0]!=self.cleaned_data['mat_number']:
+                raise forms.ValidationError('Mat-No is of this form U20--/6005---')
+        return self.cleaned_data['mat_number']
+
 
 
 class CustomLoginForm(AuthenticationForm):
@@ -50,6 +63,15 @@ class UpdateUser(UserChangeForm):
     class Meta:
         model = Students
         fields = ['username','first_name','last_name','email','mat_number','image','bio']
+
+class customPasswordResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        # label="Email",
+        max_length=254,
+        widget=forms.EmailInput(attrs={"autocomplete": "email","type":"email", "class":"form-control form-control-user",
+                                                "id":"exampleInputEmail", "aria-describedby":"emailHelp",
+                                                "placeholder":"Enter Email Address..."}),
+    )
 
 class ChangePass(PasswordChangeForm):
     old_password = forms.CharField(

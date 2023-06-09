@@ -1,12 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
-# from django.contrib.auth import get_user_model
-
-# Create your models here.
-
 class Students(AbstractUser):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -29,13 +23,5 @@ class ResultU2018(models.Model):
     mark = models.DecimalField(max_digits=5, decimal_places=2)
     grade = models.CharField(max_length=10)
 
-# @receiver(post_save, sender=get_user_model(), dispatch_uid="50050")
-# def update_matno(sender, instance, created, **kwargs):
-#     if created:
-#         result = ResultU2018.objects.filter(result_matno=instance.mat_number)
-#         # update = {"student_mat":instance}
-#         if result:
-#             for res in result:
-#                 res.student_mat = instance
-#                 res.save()
-            # Result.objects.bulk_update(result,update)
+    def __str__(self) -> str:
+        return self.mat_number
