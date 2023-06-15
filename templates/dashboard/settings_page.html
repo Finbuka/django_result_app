@@ -130,22 +130,12 @@ Settings
           <div class="card-body">
             <div class="row">
               <div class="col-md-6">
-                <form method="post" action="{% url 'password_change' %}">
-                  {% csrf_token %}
-                  {% for psform in passform %}
-                  <div class="mb-3"><label class="form-label"><strong>{{ psform.label }}</strong></label>
-                    {{ psform }}
-                    {% if forloop.counter == 2 %}
-                    {{ psform.help_text }}
-                    {% endif %}
-                  </div>
-                  {% endfor %}
-                  <div>
-                    <button class="btn btn-primary btn-sm" type="submit">
-                      Change Password
-                    </button>
-                  </div>
-                </form>
+                
+                <div>
+                  <a class="btn btn-primary btn-sm" href="{% url 'password_change' %}">
+                    Change Password
+                  </a>
+                </div>
               </div>
             </div>
           </div>

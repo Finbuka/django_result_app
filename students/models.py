@@ -25,3 +25,16 @@ class ResultU2018(models.Model):
 
     def __str__(self) -> str:
         return self.mat_number
+    
+class ResultU2019(models.Model):
+    mat_number = models.CharField(max_length=20)
+    year = models.IntegerField()
+    semester = models.IntegerField()
+    course_code = models.CharField(max_length=20)
+    course_title = models.CharField(max_length=255)    
+    credit_unit = models.DecimalField(max_digits=5,default=3, decimal_places=2)
+    mark = models.DecimalField(max_digits=5, decimal_places=2)
+    grade = models.CharField(max_length=10)
+
+    def __str__(self) -> str:
+        return self.mat_number

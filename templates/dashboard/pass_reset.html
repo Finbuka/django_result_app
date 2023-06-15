@@ -1,0 +1,66 @@
+{% extends 'dashboard_base.html' %}{% load static %}
+{% load i18n static %}
+
+{% block title %}
+Settings
+{% endblock title %}
+
+{% block body %}
+<div id="wrapper">
+
+    {% block first_nav_bar %}
+    {{ block.super }}
+    {% endblock first_nav_bar %}
+
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+
+            {% block second_nav_bar %}
+            {{ block.super }}
+            {% endblock second_nav_bar %}
+
+            <div class="container-fluid">
+                <div class="card shadow mb-5">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 fw-bold">Change Password</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    {% if form.errors %}
+                                    <p class="def-errornote">
+                                        {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+                                    </p>
+                                    {% endif %}
+                                    
+                                    {% for psform in form %}
+                                    <div class="mb-3"><label class="form-label"><strong>{{ psform.label }}</strong></label>
+                                        <div class="mb-3">
+                                            {% if form.errors %}
+                                            <ul class="def-errornote">
+                                                {{ psform.errors }}
+                                            </ul>
+                                            {% endif %}
+
+                                            {{ psform }}
+                                            {{ psform.help_text }}
+                                        </div>
+                                        {% endfor %}
+                                        <div>
+                                            <button class="btn btn-primary btn-sm" type="submit">
+                                                Change Password
+                                            </button>
+                                        </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}

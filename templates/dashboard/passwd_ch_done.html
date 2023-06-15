@@ -1,0 +1,39 @@
+{% extends 'dashboard_base.html' %}{% load static %}
+{% load i18n static %}
+
+{% block title %}
+Settings
+{% endblock title %}
+
+{% block body %}
+<div id="wrapper">
+
+    {% block first_nav_bar %}
+    {{ block.super }}
+    {% endblock first_nav_bar %}
+
+    <div class="d-flex flex-column" id="content-wrapper">
+        <div id="content">
+
+            {% block second_nav_bar %}
+            {{ block.super }}
+            {% endblock second_nav_bar %}
+
+            <div class="container-fluid">
+                <div class="card shadow mb-5">
+                    <div class="card-header py-3">
+                        <p class="text-primary m-0 fw-bold">Password Changed</p>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                Your password was changed.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock body %}
