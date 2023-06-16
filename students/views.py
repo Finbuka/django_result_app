@@ -1,26 +1,19 @@
-from typing import Any, Dict, Optional, Type
-from django.forms import BaseModelForm
+from typing import Any, Dict
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 from .forms import (CustomLoginForm, ChangePass,
-                    RegistrationForm, UpdateUser,
-                    customPasswordResetForm)
-from django.contrib.auth.views import LoginView, PasswordResetView
+                    RegistrationForm, UpdateUser)
+from django.contrib.auth import views as auth_views
 from django.views.generic import FormView, TemplateView, DetailView, UpdateView
 from django.urls import reverse_lazy
 from django.contrib.auth import login
 from .models import Students, ResultU2018
-from rest_framework.response import Response
-from rest_framework.decorators import api_view
 from django.core.mail import send_mail
 from django.conf import settings
 from django.http import JsonResponse
-
-# from django.views.decorators.csrf import csrf_exempt
-# from django.utils.decorators import method_decorator
-# from rest_framework.decorators import APIView
-# from .serializer import ResultSerializer
-# from django.contrib.auth import views as auth_views
+from django.views.decorators.cache import cache_page
+from django.views.decorators.vary import vary_on_headers
+from django.utils.decorators import method_decorator
 
 # Create your views here.
 
@@ -40,7 +33,7 @@ class SignUp(FormView):
             return redirect('dashboard')
         return super(SignUp,self).get(request, *args, **kwargs)
 
-class SignIn(LoginView):
+class SignIn(auth_views.LoginView):
     template_name='sign_in.html'
     redirect_authenticated_user = True
     next_page = reverse_lazy('dashboard')
@@ -60,7 +53,6 @@ class UpdateProfile(UpdateView):
         context["passform"] = ChangePass(self.request.user)
         return context
 
-
 class Index(TemplateView):
     template_name='index.html'
 
@@ -70,6 +62,7 @@ class Index(TemplateView):
         return super(Index,self).get(request, *args, **kwargs)
     
 
+# @method_decorator((cache_page(30),vary_on_headers("USer-Agent","Cookie")),name="dispatch")
 class ResultPage(DetailView):
     template_name='result.html'
     model = Students
@@ -90,6 +83,7 @@ class ResultPage(DetailView):
     def get_object(self):
         return self.request.user
     
+# @method_decorator((cache_page(30),vary_on_headers("USer-Agent","Cookie")),name="dispatch")
 class Stats(DetailView):
     template_name='stats.html'
     model = Students
@@ -130,18 +124,6 @@ class Stats(DetailView):
     
     def get_object(self):
         return self.request.user
-    
-# class ResultApi(APIView):
-#     def get(self, request):
-#         users = Students.objects.all()
-#         res = ResultSerializer(users, many=True)
-#         return Response(res.data)
-
-class resetPassword(PasswordResetView):
-    template_name="forgot-password.html"
-    success_url = reverse_lazy("password_reset_done")
-    form_class = customPasswordResetForm
-
 
     
 def mail(request):
@@ -152,38 +134,3 @@ def mail(request):
             # ['ebufinbar10@gmail.com'],fail_silently=False)
             return JsonResponse({"subject":data["subject"]})
         return render(request,"contact.html",)
-
-# def update_record(request):
-#     results = ResultU2018.objects.get(student_mat=None,result_matno="U2018/6005076",course_code="ECO 101.1")
-#     users = Students.objects.get(mat_number="U2018/6005076")
-#     results.student_mat = users
-#     results.save()
-
-#     results = ResultU2018.objects.filter(student_mat=None)
-#     if results:
-#         for res in results:
-#             users = Students.objects.filter(mat_number=res.result_matno)
-#             for usr in users:
-#                 res.student_mat = usr
-#                 res.save()
-#         return JsonResponse({"Work":"Done"})
-#     return JsonResponse({"Work":"Nothing"})
-
-#     users = Students.objects.all()
-#     if users:
-#         for usr in users:
-#             results = ResultU2018.objects.filter(result_matno=usr.mat_number)
-#             if results:
-#                 for res in results:
-#                     res.student_mat = usr
-#                     res.save()
-#         return JsonResponse({"Work":"Done"})
-#     return JsonResponse({"Work":"Nothing"})
-
-
-# @api_view(['GET'])
-# def apiAllLinks(request):
-#     users = Students.objects.all()
-#     res = ResultSerializer(users, many=True)
-#     return Response(res.data)
-
